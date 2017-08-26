@@ -47,6 +47,17 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     assert_select 'a', text: 'delete', count: 0
   end
 
+  test "micropost pictures" do
+    assert_select 'input[type=file]'
+
+    picture = fixture_file_upload('test/fixtures/rails.png', 'image/png')
+
+    post microposts_path,
+         params: { micropost: { content: 'content', picture: picture } }
+
+    assert assigns(:micropost).picture?
+  end
+
   test "micropost sidebar count" do
     # Multiple posts
     assert_match "#{@user.microposts.count} microposts", response.body
