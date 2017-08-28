@@ -1,5 +1,6 @@
 require 'test_helper'
 
+
 class UserTest < ActiveSupport::TestCase
   def setup
     @user = User.new(name: "Example User", email: "user@example.com",
@@ -94,6 +95,7 @@ class UserTest < ActiveSupport::TestCase
     michael.follow(archer)
 
     assert michael.following?(archer)
+    assert archer.followers.include?(michael)
 
     michael.unfollow(archer)
 
